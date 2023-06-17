@@ -100,3 +100,4 @@ tree.printAll(root);
 console.log("----");
 tree.printAllParent(temp);
 console.log("----");
+console.log("test");
