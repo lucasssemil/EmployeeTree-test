@@ -1,0 +1,37 @@
+body {
+  font-family: Arial, "Helvetica", sans-serif;
+}
+.div-wrap {
+  border: solid 0.1rem gainsboro;
+  border-radius: 0.25rem;
+  margin: 2px 1px;
+  padding: 1rem;
+  width: auto !important;
+  position: relative;
+}
+#button-output {
+  float: right;
+}
+.div-pre {
+  display: flex !important;
+  justify-content: space-between;
+  overflow-y: auto;
+  height: 500px;
+}
+::-webkit-file-upload-button {
+  border: solid 0.1rem gainsboro;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+}
+button {
+  border: solid 0.1rem gainsboro;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+}
+#file-upload-button:hover {
+  background-color: black;
+}
+.div-content {
+  overflow-y: auto;
+  padding-right: 3rem;
+}

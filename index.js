@@ -1,84 +1,39 @@
-class Node {
-  constructor(name, jobTitle) {
-    this.name = name;
-    this.jobTitle = jobTitle;
-    this.children = [];
-    this.parent = null;
+import { Node, Tree } from "./nodeTree.js";
+
+let jsonOutput = null;
+
+function readSingleFile(e) {
+  const file = e.target.files[0];
+  if (!file) {
+    return;
   }
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    const contents = e.target.result;
+    displayContents(contents);
+  };
+  reader.readAsText(file);
 }
 
-class Tree {
-  constructor() {
-    this.root = null;
-  }
-
-  search(node, name) {
-    if (node.name === name) {
-      return node;
-    }
-
-    for (let child of node.children) {
-      const foundNode = this.search(child, name);
-      if (foundNode) {
-        return foundNode;
-      }
-    }
-
-    return null;
-  }
-
-  insertChild(parentNode, childNode) {
-    parentNode.children.push(childNode);
-    childNode.parent = parentNode;
-  }
-
-  insertParent(childNode, parentNode) {
-    if (childNode.parent) {
-      const index = childNode.parent.children.indexOf(childNode);
-      childNode.parent.children.splice(index, 1);
-    }
-
-    parentNode.children.push(childNode);
-    childNode.parent = parentNode;
-  }
-
-  printAll(node, indent = "") {
-    console.log(indent + "Node:", node.name, "Job Title:", node.jobTitle);
-
-    for (let child of node.children) {
-      this.printAll(child, indent + "  ");
-    }
-  }
-
-  printAllParent(node) {
-    const stack = [];
-    let currentNode = node;
-
-    while (currentNode) {
-      stack.push(currentNode);
-      currentNode = currentNode.parent;
-    }
-
-    while (stack.length > 0) {
-      const parentNode = stack.pop();
-      console.log(
-        "Parent:",
-        parentNode.name,
-        "Job Title:",
-        parentNode.jobTitle
-      );
-    }
-  }
-
-  printAllChild(node) {
-    for (let child of node.children) {
-      console.log("Child:", child.name, "Job Title:", child.jobTitle);
-      this.printAllChild(child);
-    }
-  }
+function displayContents(contents) {
+  const element = document.getElementById("file-content");
+  const element2 = document.getElementById("file-output");
+  jsonOutput = JSON.parse(contents);
+  element.textContent = contents;
+  element2.textContent = contents;
 }
 
-// Usage example
+function showResult() {
+  if (jsonOutput) console.log(jsonOutput);
+  else console.log("no selected file");
+}
+
+const fileInput = document.getElementById("file-input");
+fileInput.addEventListener("change", readSingleFile, false);
+
+const outputButton = document.getElementById("button-output");
+outputButton.addEventListener("click", showResult);
+
 const tree = new Tree();
 
 // Create nodes
@@ -92,7 +47,7 @@ tree.insertChild(root, node1);
 tree.insertChild(root, node2);
 tree.insertChild(node1, node3);
 tree.insertChild(node1, new Node("emil", "dev"));
-temp = tree.search(root, "emil");
+let temp = tree.search(root, "emil");
 if (temp) tree.insertChild(temp, new Node("lucas", "dev"));
 
 // Print all nodes in the tree with indentation
