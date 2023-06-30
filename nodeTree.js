@@ -1,7 +1,6 @@
 export class Node {
-  constructor(name, jobTitle) {
+  constructor(name) {
     this.name = name;
-    this.jobTitle = jobTitle;
     this.children = [];
     this.parent = null;
   }
@@ -11,14 +10,28 @@ export class Tree {
   constructor() {
     this.root = null;
   }
-
-  search(node, name) {
-    if (node.name === name) {
-      return node;
+  //this addNode only adding child/parent to node in the parameter
+  addNode(parentNode, childNode) {
+    if (!this.root) {
+      this.root = parentNode;
     }
-    //for each child im node children if the node name equal search name
-    for (let child of node.children) {
-      const foundNode = this.search(child, name);
+
+    if (childNode === this.root) {
+      this.root = parentNode;
+    }
+    childNode.parent = parentNode;
+    parentNode.children.push(childNode);
+  }
+  //combine with findNode to find the coresponding node within the tree
+  findNode(name, currentNode = this.root) {
+    // starting from root
+    if (!currentNode) return null; //for if tree is empty
+    if (currentNode.name === name) {
+      return currentNode;
+    }
+
+    for (const childNode of currentNode.children) {
+      const foundNode = this.findNode(name, childNode); //recursive for each children available
       if (foundNode) {
         return foundNode;
       }
@@ -27,53 +40,12 @@ export class Tree {
     return null;
   }
 
-  insertChild(parentNode, childNode) {
-    parentNode.children.push(childNode);
-    childNode.parent = parentNode;
-  }
-
-  insertParent(childNode, parentNode) {
-    if (childNode.parent) {
-      const index = childNode.parent.children.indexOf(childNode);
-      childNode.parent.children.splice(index, 1);
+  printNode(node, path = []) {
+    while (node.parent !== null) {
+      path.push(node.name);
+      node = node.parent;
     }
-
-    parentNode.children.push(childNode);
-    childNode.parent = parentNode;
-  }
-
-  printAll(node, indent = "") {
-    console.log(indent + "Node:", node.name, "Job Title:", node.jobTitle);
-
-    for (let child of node.children) {
-      this.printAll(child, indent + "  ");
-    }
-  }
-
-  printAllParent(node) {
-    const stack = [];
-    let currentNode = node;
-
-    while (currentNode) {
-      stack.push(currentNode);
-      currentNode = currentNode.parent;
-    }
-
-    while (stack.length > 0) {
-      const parentNode = stack.pop();
-      console.log(
-        "Parent:",
-        parentNode.name,
-        "Job Title:",
-        parentNode.jobTitle
-      );
-    }
-  }
-
-  printAllChild(node) {
-    for (let child of node.children) {
-      console.log("Child:", child.name, "Job Title:", child.jobTitle);
-      this.printAllChild(child);
-    }
+    path.push(node.name);
+    return path;
   }
 }

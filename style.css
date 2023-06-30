@@ -32,6 +32,10 @@ button {
   background-color: black;
 }
 .div-content {
+  min-width: 175px !important;
+  border: solid 0.1rem gainsboro;
+  border-radius: 0.25rem;
+  padding: 1rem;
   overflow-y: auto;
   padding-right: 3rem;
 }
