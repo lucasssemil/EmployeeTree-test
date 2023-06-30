@@ -111,34 +111,22 @@ function getJsonData(data, key) {
   });
 }
 function showResult() {
+  //mapping the data
   let output = [];
-  // console.log(projectsList);
-  // console.log(toOutput);
   projectsList.forEach((data) => {
     let projectData = {};
-    // console.log("data");\
-    // console.log(data);
-    // let tempData = getJsonData(toOutput, data);
     let tempData = [];
     let arrayError = [];
     projectData.projectName = data;
     getJsonData(errorData, data).forEach((item) => {
+      //check if error exist
       let tempError = {};
-      // console.log("erroritem");
-      // console.log(item);
       tempError.code = item.code;
       tempError.name = [];
       tempError.name.push(item.name);
       arrayError.push(tempError);
     });
-    // console.log("arrayError");
-    // console.log(arrayError);
-    // console.log(data);
-    // tempData = tempData.map(({ value }) => ({ value }));
     if (arrayError.length > 0) {
-      console.log("arrayError");
-      console.log(arrayError);
-      console.log(data);
       let stringError = "";
       if (arrayError[0].code == "101") stringError = " has multiple managers";
       if (arrayError[0].code == "102") stringError = " not having hierarchy";
@@ -146,26 +134,17 @@ function showResult() {
         "unable to process employee tree. one or more employee" + stringError;
     } else {
       getJsonData(toOutput, data).forEach((item) => {
-        // tempData.push(item.value);
         let arrayData = {};
         arrayData.employee = item.value.shift();
         let sp = item.value;
         arrayData.superiors = sp;
-        // console.log(arrayData);
         tempData.push(arrayData);
       });
       projectData.employeeHierarchies = tempData;
     }
-    console.log("projectData");
-    console.log(projectData);
-    output.push(projectData);
   });
-  console.log(output);
   const element2 = document.getElementById("file-output");
   element2.textContent = JSON.stringify(output, null, 2);
-  // if (jsonOutput) console.log(jsonOutput);
-  // else console.log("no selected file");
-  // writeOutput(output);
   writeFileReq(output);
 }
 
