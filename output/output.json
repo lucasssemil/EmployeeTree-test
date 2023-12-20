@@ -1,1 +1,30 @@
-[]
+[
+  {
+    "projectName": "ProjectMidland",
+    "employeeHierarchies": [
+      {
+        "employee": "evelina",
+        "superiors": [
+          "eveleen",
+          "kacie",
+          "raelynn"
+        ]
+      },
+      {
+        "employee": "bertha",
+        "superiors": [
+          "darin",
+          "raelynn"
+        ]
+      }
+    ]
+  },
+  {
+    "projectName": "ProjectQuant",
+    "error": "unable to process employee tree. one or more employee has multiple managers"
+  },
+  {
+    "projectName": "ProjectGeorgia",
+    "error": "unable to process employee tree. one or more employee not having hierarchy"
+  }
+]

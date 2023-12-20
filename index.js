@@ -142,6 +142,7 @@ function showResult() {
       });
       projectData.employeeHierarchies = tempData;
     }
+    output.push(projectData);
   });
   const element2 = document.getElementById("file-output");
   element2.textContent = JSON.stringify(output, null, 2);

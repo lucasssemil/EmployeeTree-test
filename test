@@ -1,0 +1,48 @@
+Class Node{
+    var parent<Node>
+    var children<Node>[]
+    var key<string>
+    var value<int>
+}
+
+Class Tree{
+    var root<Node>
+}
+
+
+function findNode( key , node){
+    if(node.key == key){
+        return node
+    }
+    foreach child in node.children{
+        return findNode( key , child)
+    }
+    
+    return null
+}
+
+parent = new Node(key , value)
+child = new Node(key , value)
+
+function insertNode( parent , child ){
+    var checkChild = this.root.findNode(child.key , this.root)
+    if(checkChild) break
+    var checkParent = this.root.findNode(parent.key , this.root)
+    if(!checkParent) break
+
+    checkParent.children.add(child)
+}
+
+
+function findNodeBFS( key , node ){
+if(node.key == key) return node
+let temp
+var newNodes = node.children
+foreach child in newNodes{
+    if(child.key == key){
+        temp .add(child)
+        return node
+    }
+}
+findNodeBFS(key , temp)
+}
